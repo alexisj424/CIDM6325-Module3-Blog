@@ -1,13 +1,40 @@
-{% extends "blog/base.html" %}
-{% block title %}{{ title }}{% endblock %}
-
+{% extends 'blog/base.html' %}
 {% block content %}
-<h1 class="mb-3">{{ title }}</h1>
+<h1 class="mb-3">
+  {% if post %}Edit Post{% else %}New Post{% endif %}
+</h1>
 
-<form method="post">
+<form method="post" novalidate>
   {% csrf_token %}
-  {{ form.as_p }}
+  <div class="mb-3">
+    <label class="form-label" for="{{ form.title.id_for_label }}">Title</label>
+    {{ form.title }}
+    <div id="titleHelp" class="form-text">{{ form.title.help_text }}</div>
+    {% for e in form.title.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label" for="{{ form.body.id_for_label }}">Body</label>
+    {{ form.body }}
+    {% for e in form.body.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label" for="{{ form.category.id_for_label }}">Category</label>
+    {{ form.category }}
+    {% for e in form.category.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label" for="{{ form.tags.id_for_label }}">Tags</label>
+    {{ form.tags }}
+    {% for e in form.tags.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+  </div>
+
   <button class="btn btn-primary">Save</button>
   <a class="btn btn-secondary" href="{% url 'blog:post_list' %}">Cancel</a>
 </form>
 {% endblock %}
+
+
+

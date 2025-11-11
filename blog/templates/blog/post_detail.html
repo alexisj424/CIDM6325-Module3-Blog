@@ -7,6 +7,13 @@
     {% if post.updated_at and post.updated_at != post.created_at %} | Updated {{ post.updated_at|date:"Y-m-d H:i" }}{% endif %}
   </p>
 
+  <!-- Image Display (New for Part E) -->
+  {% if post.image %}
+    <div class="mb-3">
+      <img src="{{ post.image.url }}" alt="{{ post.title }}" style="max-width: 100%; height: auto; display: block;">
+    </div>
+  {% endif %}
+
   <div class="mb-3">
     {{ post.body|linebreaks }}
   </div>
@@ -48,6 +55,7 @@
     <p class="mt-3"><a href="{% url 'login' %}">Log in</a> to post a comment.</p>
   {% endif %}
 {% endblock %}
+
 
 
 

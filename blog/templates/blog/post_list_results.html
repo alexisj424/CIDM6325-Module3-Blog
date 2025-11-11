@@ -2,19 +2,33 @@
   <ul class="list-group">
   {% for post in posts %}
     <li class="list-group-item">
+
+      <!-- Image Preview (New for Part E) -->
+      {% if post.image %}
+        <div class="mb-2">
+          <img src="{{ post.image.url }}" alt="{{ post.title }}" style="max-width: 200px; height: auto; display: block;">
+        </div>
+      {% endif %}
+
+      <!-- Post Title -->
       <a href="{% url 'blog:post_detail' post.pk %}">{{ post.title }}</a>
+
+      <!-- Meta Information -->
       <div class="small text-muted">
         by {{ post.author }} • {{ post.created_at|date:"Y-m-d H:i" }}
         {% if post.category %} • in {{ post.category.name }}{% endif %}
-        {% if post.tags.all %} •
+        {% if post.tags.all %}
+          •
           {% for t in post.tags.all %}
             <span class="badge text-bg-light">{{ t.name }}</span>
           {% endfor %}
         {% endif %}
       </div>
+
     </li>
   {% endfor %}
   </ul>
 {% else %}
   <p class="text-muted">No posts match your filters.</p>
 {% endif %}
+
